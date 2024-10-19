@@ -29,7 +29,13 @@ export const Item = ({
     const onClick = () => {
         if(!isActive) return;
 
-        setActive({ organization: id});
+        // setActive({ organization: id});
+        /**
+         * the editor or may be one plugin always shows the error below if i use the statement above
+         * Cannot invoke an object which is possibly 'undefined'.ts(2722)
+         * so i will use the statement below
+         */
+        if(setActive) setActive({ organization: id});
     }
 
     return (
