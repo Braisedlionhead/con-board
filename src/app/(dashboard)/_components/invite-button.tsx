@@ -1,3 +1,7 @@
+/**
+ * If your app is rendered with React Server Components by default, you'll need to add the use client directive when using <OrganizationProfile />.
+ */
+
 import { Plus } from "lucide-react";
 import { OrganizationProfile } from "@clerk/nextjs";
 

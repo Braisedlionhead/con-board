@@ -37,3 +37,6 @@ next-env.d.ts
 
 # pers-bak
 *.bak
+
+# to be optimized
+/opt
