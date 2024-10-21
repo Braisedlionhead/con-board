@@ -1,4 +1,4 @@
-"use client ";
+"use client";
 /**
  * use client doesn't mean client-side rendering, it just means that it's not a server component
  * and server component is not the same thing as server-side rendering
