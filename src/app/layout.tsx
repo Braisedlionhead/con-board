@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner";
 import {ConvexClientProvider} from "@/providers/convex-client-provider";
+import { ModalProvider } from "@/providers/modal-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,8 @@ export default function RootLayout({
       >
         <ConvexClientProvider>
           <Toaster />
+          {/* make use u add your modal provider otherwise your rename model will never be rendered  */}
+          <ModalProvider />
           {children}
         </ConvexClientProvider>
       </body>

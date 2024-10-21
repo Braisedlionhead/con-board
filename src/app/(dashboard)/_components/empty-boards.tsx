@@ -48,10 +48,10 @@ export const EmptyBoards = () => {
                 width={110}
             />
             <h2 className="text-2xl font-semibold mt-6">
-                No results found!
+                No boards found!
             </h2>
             <p className="text-muted-foreground text-sm mt-2">
-                Try searching for something else
+                Try to create a new board
             </p>
             <div className="mt-6">
                 <Button disabled={pending} onClick={onClick} size="lg">
