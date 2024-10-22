@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
-import { Link2, Trash2 } from "lucide-react";
+import { Link2, Pencil, Trash2 } from "lucide-react";
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
 
 import { ConfirmModal } from "@/components/confirm-modal";
@@ -63,6 +63,11 @@ export const Actions = ({
           Copy board link
         </DropdownMenuItem>
 
+        <DropdownMenuItem onClick={() => onOpen(id,title)} className="p-3 cursor-pointer">
+          <Pencil className="h-4 w-4 mr-2" />
+          Rename board
+        </DropdownMenuItem>
+
         <ConfirmModal
           header="Delete board"
           description="Are you sure you want to delete this board?"
@@ -77,7 +82,8 @@ export const Actions = ({
             Delete
           </Button>
 
-          {/* the dialog will close quickly if using the code below  */}
+          {/* we cannot use drop down menu item inside the ConfirmModal bacause the dialog will close quickly 
+            but when we use button it will not close until we click on the button */}
           {/* <DropdownMenuItem 
             // onClick={onDelete} 
             className="p-3 cursor-pointer"
