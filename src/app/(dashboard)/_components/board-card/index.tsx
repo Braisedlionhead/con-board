@@ -14,6 +14,8 @@ import { useApiMutation } from "@/hooks/use-api-mutation";
 import { Overlay } from "./overlay";
 import { Footer } from "./footer";
 import { toast } from "sonner";
+import { useMutation } from "convex/react";
+import { Id } from "../../../../../convex/_generated/dataModel";
 
 interface BoardCardProps {
   id: string;
@@ -42,9 +44,24 @@ export const BoardCard = ({
   const { userId } = useAuth();
 
   const authorLabel = userId === authorId ? "You" : authorName;
+  // what the hell is this??
   const createdAtLabel = formatDistanceToNow(createdAt, {
     addSuffix: true,
   });
+
+  /**
+   * useMutation from convex/react is also available
+   * but in this case, we have to manually handle the pending state
+   */
+  // const handleFavorite = useMutation(api.board.favorite);
+  // const handleUnfavorite = useMutation(api.board.unfavorite);
+  // const toggleFavorite = () => {
+  //   if (isFavorite) {
+  //     handleUnfavorite({id: id as Id<"boards"> }).catch(() => toast.error("Failed to unfavorite"));
+  //   } else {
+  //     handleFavorite({ id: id as Id<"boards">, orgId }).catch(() => toast.error("Failed to favorite"));
+  //   }
+  // };
 
   const { mutate: onFavorite, pending: pendingFavorite } = useApiMutation(
     api.board.favorite
