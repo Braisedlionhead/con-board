@@ -8,9 +8,12 @@ import { formatDistanceToNow } from "date-fns";
 
 import { Actions } from "@/components/actions";
 import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "../../../../../convex/_generated/api";
+import { useApiMutation } from "@/hooks/use-api-mutation";
 
 import { Overlay } from "./overlay";
 import { Footer } from "./footer";
+import { toast } from "sonner";
 
 interface BoardCardProps {
   id: string;
@@ -20,7 +23,7 @@ interface BoardCardProps {
   authorName: string;
   createdAt: number;
   orgId: string;
-  idFavorites: boolean;
+  isFavorite: boolean;
 }
 
 export const BoardCard = ({
@@ -31,7 +34,7 @@ export const BoardCard = ({
   authorName,
   createdAt,
   orgId,
-  idFavorites,
+  isFavorite,
 }: BoardCardProps) => {
   /**
    * both useAuch from @clerk/nextjs and useConvex from convex/react are available
@@ -42,6 +45,22 @@ export const BoardCard = ({
   const createdAtLabel = formatDistanceToNow(createdAt, {
     addSuffix: true,
   });
+
+  const { mutate: onFavorite, pending: pendingFavorite } = useApiMutation(
+    api.board.favorite
+  );
+  const { mutate: onUnfavorite, pending: pendingUnfavorite } = useApiMutation(
+    api.board.unfavorite
+  );
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      // we don't need a success message for this, because it's going to be immediately shown to the user
+      onUnfavorite({ id }).catch(() => toast.error("Failed to unfavorite"));
+    } else {
+      onFavorite({ id, orgId }).catch(() => toast.error("Failed to favorite"));
+    }
+  };
 
   return (
     <Link href={`/board/${id}`}>
@@ -60,22 +79,21 @@ export const BoardCard = ({
             side="right"
             // sideOffset={10}
           >
-            <button 
-            className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity px-3 py-2 outline-none"> 
-                <MoreHorizontal 
-                    className="text-white opacity-75
+            <button className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity px-3 py-2 outline-none">
+              <MoreHorizontal
+                className="text-white opacity-75
                     hover:opacity-100 transition-opacity"
-                />
+              />
             </button>
           </Actions>
         </div>
         <Footer
-          isFavorite={idFavorites}
+          isFavorite={isFavorite}
           title={title}
           authorLabel={authorLabel}
           createdAtLabel={createdAtLabel}
-          onClick={() => {}}
-          disabled={false}
+          onClick={toggleFavorite}
+          disabled={pendingFavorite || pendingUnfavorite}
         />
       </div>
     </Link>
