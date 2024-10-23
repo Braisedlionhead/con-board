@@ -20,6 +20,7 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["./**/*", "../src/providers"],
+  /* maybe this tsconfig should only configure the files inside the convex folder */
+  "include": ["./**/*"],
   "exclude": ["./_generated"]
 }
