@@ -40,3 +40,6 @@ next-env.d.ts
 
 # to be optimized
 /opt
+
+# vscode
+/.vscode

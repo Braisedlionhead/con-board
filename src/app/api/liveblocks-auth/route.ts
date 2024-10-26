@@ -21,7 +21,8 @@ export async function POST(request: Request) {
   const user = await currentUser();
 
   if (!authorization || !user) {
-    return new Response("Unauthorized", { status: 403 });
+    // return new Response("Unauthorized", { status: 403 });
+    return new Response("Unauthenticated", { status: 401 });
   }
 
   const { room } = await request.json();
@@ -41,8 +42,8 @@ export async function POST(request: Request) {
    * e.g. the user is the owner of A and B, when the user switches to B and tries to access a board in A, the board.orgId which is A will not match the authorization.orgId which is B
    */
   if (board?.orgId !== authorization.orgId) {
-    // return new Response("Unauthorized-Forbidden", { status: 403 });
-    return new Response("Unauthorized", { status: 401 });
+    return new Response("Unauthorized-Forbidden", { status: 403 });
+    // return new Response("Unauthorized", { status: 401 });
   }
 
   const userInfo = {
