@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useHistory, useCanUndo, useRedo } from "@liveblocks/react/suspense";
+import { useHistory, useCanUndo, useCanRedo } from "@liveblocks/react/suspense";
 import { CanvasMode, CanvasState } from "@/types/canvas";
 
 import { Info } from "./info";
@@ -16,7 +16,7 @@ interface CanvasProps {
 export const Canvas = ({ boardId }: CanvasProps) => {
   const history = useHistory();
   const canUndo = useCanUndo();
-  const redo = useRedo();
+  const canRedo = useCanRedo();
 
   const [canvasState, setCanvasState] = useState<CanvasState>({
     mode: CanvasMode.None,
@@ -33,7 +33,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
         canvasState={canvasState}
         setCanvasState={setCanvasState}
         canUndo={canUndo}
-        canRedo={canUndo}
+        canRedo={canRedo}
         undo={history.undo}
         redo={history.redo}
       />
