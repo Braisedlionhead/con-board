@@ -1,20 +1,26 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { useHistory, useCanUndo, useRedo } from "@liveblocks/react/suspense";
+import { CanvasMode, CanvasState } from "@/types/canvas";
 
 import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
-
-// import { useSelf } from "../../../../../liveblocks.config"
-import  { useSelf } from "@liveblocks/react/suspense";
 
 interface CanvasProps {
   boardId: string;
 }
 
 export const Canvas = ({ boardId }: CanvasProps) => {
+  const history = useHistory();
+  const canUndo = useCanUndo();
+  const redo = useRedo();
 
+  const [canvasState, setCanvasState] = useState<CanvasState>({
+    mode: CanvasMode.None,
+  });
 
   return (
     <main
@@ -23,7 +29,14 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     >
       <Info boardId={boardId} />
       <Participants />
-      <Toolbar />
+      <Toolbar
+        canvasState={canvasState}
+        setCanvasState={setCanvasState}
+        canUndo={canUndo}
+        canRedo={canUndo}
+        undo={history.undo}
+        redo={history.redo}
+      />
     </main>
   );
 };
