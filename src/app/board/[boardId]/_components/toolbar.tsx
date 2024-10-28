@@ -128,7 +128,7 @@ export const Toolbar = ({
           icon={Undo2}
           onClick={undo}
           isActive={false}
-          // isDisabled={!canUndo}
+          isDisabled={!canUndo}
         />
         <ToolButton
           label="Redo"
