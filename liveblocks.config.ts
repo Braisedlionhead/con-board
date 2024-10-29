@@ -63,6 +63,7 @@ declare global {
 }
 
 // 使用新版的 Liveblocks 类型
+// i think we may not need to export what we state below
 export const {
   RoomProvider,
   useMyPresence,
