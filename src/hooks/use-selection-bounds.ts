@@ -42,6 +42,7 @@ const boundingBox = (layers: Layer[]): XYWH | null => {
   };
 };
 
+// export const useSelectionBounds = (): XYWH | null => {
 export const useSelectionBounds = () => {
   const selection = useSelf((me) => me.presence.selection);
 
