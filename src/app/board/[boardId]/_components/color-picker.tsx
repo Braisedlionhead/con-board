@@ -4,7 +4,7 @@ import { Color } from "@/types/canvas";
 import { colorToCss } from "@/lib/utils";
 
 interface ColorPickerProps {
-  onChange: () => void;
+  onChange: (color: Color) => void;
 }
 
 export const ColorPicker = ({ onChange }: ColorPickerProps) => {

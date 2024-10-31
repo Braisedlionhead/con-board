@@ -1,10 +1,15 @@
 "use client";
 
 import { memo } from "react";
+import { Trash2 } from "lucide-react";
 
-import { useSelf } from "@liveblocks/react";
+import { useMutation, useSelf } from "@liveblocks/react";
+import { Button } from "@/components/ui/button";
+import { Hint } from "@/components/hint";
 import { Camera, Color } from "@/types/canvas";
 import { useSelectionBounds } from "@/hooks/use-selection-bounds";
+import { useDeleteLayers } from "@/hooks/use-delete-layers";
+
 import { ColorPicker } from "./color-picker";
 
 interface SelectionToolsProps {
@@ -15,6 +20,21 @@ interface SelectionToolsProps {
 export const SelectionTools = memo(
   ({ camera, setLastUsedColor }: SelectionToolsProps) => {
     const selection = useSelf((me) => me.presence.selection);
+
+    // change the fill color of the selected layers
+    const setFill = useMutation(
+      ({ storage }, fill: Color) => {
+        const liveLayers = storage.get("layers");
+        setLastUsedColor(fill);
+
+        selection?.forEach((id) => {
+          liveLayers.get(id)?.set("fill", fill);
+        });
+      },
+      [selection, setLastUsedColor]
+    );
+
+    const deleteLayers = useDeleteLayers();
 
     const selecctionBounds = useSelectionBounds();
 
@@ -30,10 +50,14 @@ export const SelectionTools = memo(
           transform: `translate(calc(${x}px - 50%), calc(${y - 16}px - 100%))`,
         }}
       >
-        <ColorPicker 
-        onChange={() => {}} 
-        
-        />
+        <ColorPicker onChange={setFill} />
+        <div className="flex items-center pl-2 ml-2 border-l border-neutral-200">
+          <Hint label="Delete">
+            <Button variant="board" size="icon" onClick={deleteLayers}>
+              <Trash2 />
+            </Button>
+          </Hint>
+        </div>
       </div>
     );
   }
