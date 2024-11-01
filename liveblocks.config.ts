@@ -23,6 +23,8 @@ declare global {
       cursor: { x: number; y: number } | null;
       // cursor: { x: number; y: number };
       selection: string[];
+      pencilDraft: [x: number, y: number, pressure: number][] | null;
+      penColor: Color | null;
     };
 
     // The Storage tree for the room, for useMutation, useStorage, etc.
